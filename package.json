@@ -10,14 +10,14 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:dockerfiletemplate.helloWorld"
+		"onCommand:dockerfiletemplate.generatedockerfile"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "dockerfiletemplate.helloWorld",
-				"title": "Hello World"
+				"command": "dockerfiletemplate.generatedockerfile",
+				"title": "Generate Docker file"
 			}
 		]
 	},
