@@ -1,7 +1,9 @@
-FROM node:12 
+FROM node:14-slim
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm ci
 COPY . .
-EXPOSE 3000
-CMD [ "npm", "start" ]
+RUN npm run build
+RUN npm i -g serve
+EXPOSE 5000
+CMD [ "serve", "-S" , "build"]
