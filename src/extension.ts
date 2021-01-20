@@ -1,9 +1,9 @@
 import * as vscode from 'vscode';
-const path = require('path');
+import * as path from 'path';
 import * as fs from 'fs';
 import * as _  from 'lodash';
 
-function GetTemplates(templatePath: fs.PathLike): Array<Array<string>> {
+export function GetTemplates(templatePath: fs.PathLike): Array<Array<string>> {
 	const files = fs.readdirSync(templatePath);
 	const templates: Array<string> = [];
 	files.filter(e => e.includes(".dockerignore") ? false : true).forEach(file => {
@@ -12,14 +12,28 @@ function GetTemplates(templatePath: fs.PathLike): Array<Array<string>> {
 	return [templates, files];
 }
 
-function CreateDockerFile(option: any , templatePath: String, workspaceFolder: String): void {
-	const data = fs.readFileSync(`${templatePath}/${option}.dockerfile`);
-	fs.writeFileSync(`${workspaceFolder}/Dockerfile`, data);
+export function CreateDockerFile(option: any, templatePath: String, workspaceFolder: String): Boolean {
+	try {
+		const data = fs.readFileSync(`${templatePath}/${option}.dockerfile`);
+	  fs.writeFileSync(`${workspaceFolder}/Dockerfile`, data);
+	} catch (error) {
+		return false
+	}
+	finally {
+		return true
+	}
 }
 
-function CreateIgnoreDockerFile(option: any , templatePath: String, workspaceFolder: String): void {
-	const data = fs.readFileSync(`${templatePath}/.dockerignore ${option}`);
-	fs.writeFileSync(`${workspaceFolder}/.dockerignore`, data);
+export function CreateIgnoreDockerFile(option: any, templatePath: String, workspaceFolder: String): Boolean {
+	try {
+		const data = fs.readFileSync(`${templatePath}/.dockerignore ${option}`);
+		fs.writeFileSync(`${workspaceFolder}/.dockerignore`, data);
+	} catch (error) {
+		return false
+	}
+	finally {
+		return true
+	}
 }
 
 export function activate(context: vscode.ExtensionContext) {
@@ -45,9 +59,9 @@ export function activate(context: vscode.ExtensionContext) {
 	}
 	else {
 		vscode.window.showInformationMessage("workspaceFolder not found")
-		}
+	}
 	})
 	context.subscriptions.push(disposable);
 }
 
-export function deactivate() {}
+export function deactivate() { }
