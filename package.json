@@ -4,7 +4,7 @@
 	"displayName": "Docker File Template",
 	"description": "Quick Dockerfile for your project",
 	"icon": "assets/Docker.png",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"engines": {
 		"vscode": "^1.52.0"
 	},
@@ -16,9 +16,9 @@
 	],
 	"main": "./out/extension.js",
 	"repository": {
-    "type": "git",
-    "url": "git+https://github.com/QuentinGruber/dockerfiletemplate.git"
-  },
+		"type": "git",
+		"url": "git+https://github.com/QuentinGruber/dockerfiletemplate.git"
+	},
 	"contributes": {
 		"commands": [
 			{
