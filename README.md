@@ -4,10 +4,10 @@ Tired of always rewriting the sames dockerfiles? Docker File Template is for you
 
 ## Features
 
-`ctrl+shift+p` To open the command window
+Use `ctrl+shift+p` to open the command window
 
-cmd`generatedockerfile`
-![generatedockerfile](assets\DockerFileTemplate_GenerateDockerFile.gif)
+`Generate Docker File`
+![generatedockerfile](https://qgruber-storage.s3.eu-west-3.amazonaws.com/DockerFileTemplate/DockerFileTemplate_GenerateDockerFile.gif)
 
 > Tip: If a .dockerignore file has been associated to the template a window will ask you if you want to use it.
 

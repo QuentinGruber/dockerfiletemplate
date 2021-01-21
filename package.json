@@ -1,8 +1,10 @@
 {
 	"name": "dockerfiletemplate",
-	"displayName": "DockerFileTemplate",
-	"description": "Quick dockerfile for your project",
-	"version": "0.0.1",
+	"publisher": "QuentinGruber",
+	"displayName": "Docker File Template",
+	"description": "Quick Dockerfile for your project",
+	"icon": "assets/Docker.png",
+	"version": "1.0.0",
 	"engines": {
 		"vscode": "^1.52.0"
 	},
@@ -13,6 +15,9 @@
 		"onCommand:dockerfiletemplate.generatedockerfile"
 	],
 	"main": "./out/extension.js",
+	"repository": {
+		"url": "https://github.com/QuentinGruber/dockerfiletemplate"
+	},
 	"contributes": {
 		"commands": [
 			{
