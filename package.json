@@ -16,8 +16,9 @@
 	],
 	"main": "./out/extension.js",
 	"repository": {
-		"url": "https://github.com/QuentinGruber/dockerfiletemplate"
-	},
+    "type": "git",
+    "url": "git+https://github.com/QuentinGruber/dockerfiletemplate.git"
+  },
 	"contributes": {
 		"commands": [
 			{

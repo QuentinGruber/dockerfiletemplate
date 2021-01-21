@@ -2,6 +2,8 @@
 
 Tired of always rewriting the sames dockerfiles? Docker File Template is for you!
 
+Suggest new Dockerfiles here : https://github.com/QuentinGruber/dockerfiletemplate
+
 ## Features
 
 Use `ctrl+shift+p` to open the command window
