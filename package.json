@@ -4,7 +4,7 @@
 	"displayName": "Docker File Template",
 	"description": "Quick Dockerfile for your project",
 	"icon": "assets/Docker.png",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"engines": {
 		"vscode": "^1.52.0"
 	},
