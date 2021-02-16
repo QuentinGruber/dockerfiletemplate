@@ -19,9 +19,7 @@ export function CreateDockerFile(option: any, templatePath: String, workspaceFol
 	} catch (error) {
 		return false;
 	}
-	finally {
-		return true;
-	}
+	return true;
 }
 
 export function CreateIgnoreDockerFile(option: any, templatePath: String, workspaceFolder: String): Boolean {
@@ -31,9 +29,7 @@ export function CreateIgnoreDockerFile(option: any, templatePath: String, worksp
 	} catch (error) {
 		return false;
 	}
-	finally {
-		return true;
-	}
+	return true;
 }
 
 export function activate(context: vscode.ExtensionContext) {
