@@ -51,6 +51,6 @@
 		"vscode-test": "^1.4.1"
 	},
 	"dependencies": {
-		"lodash": "^4.17.20"
+		"lodash": "^4.17.21"
 	}
 }
