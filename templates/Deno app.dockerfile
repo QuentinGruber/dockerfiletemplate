@@ -1,11 +1,21 @@
-FROM ubuntu:21.04
-WORKDIR /usr/src/app
-# Install Deno
-RUN apt update && apt-get install unzip -y && apt install -y curl
-RUN curl -fsSL https://deno.land/x/install/install.sh | sh
+# dockerfile from https://github.com/hayd/deno-docker
+FROM hayd/alpine-deno:latest
+WORKDIR /app
+
+# Prefer not to run as root.
+USER deno
+
+# Cache the dependencies as a layer (the following two steps are re-run only when deps.ts is modified).
+# Ideally cache deps.ts will download and compile _all_ external files used in main.ts.
+COPY deps.ts .
+RUN deno cache deps.ts
+
+# These steps will be re-run upon each file change in your working directory:
+ADD . .
+# Compile the main app so that it doesn't need to be compiled each startup/entry.
+RUN deno cache main.ts
 # Copy all not-ignored files to volume
 COPY . .
-# Cache the dependencies of your script
-RUN /root/.deno/bin/deno cache index.ts
+# The port that your application listens to.
 EXPOSE 8000
-CMD [ "/root/.deno/bin/deno", "run", "--allow-net", "index.ts"]
+CMD ["run", "--allow-net", "main.ts"]
