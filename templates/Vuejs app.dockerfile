@@ -1,10 +1,9 @@
-FROM node:14-alpine
+FROM node:16-alpine
 WORKDIR /usr/src/app
-COPY package.json ./
-COPY yarn.lock ./
-RUN yarn install
+COPY package*.json ./
+RUN npm i
 COPY . .
-RUN yarn build
+RUN npm run build
 RUN npm i -g serve
 EXPOSE 5000
 CMD [ "serve", "-S" , "dist"]
