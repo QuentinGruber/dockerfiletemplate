@@ -65,8 +65,39 @@ function findInstallObjFromName(name:string,templates:Template[]):TemplateFile |
 	throw new Error("Can't find "+name);
 }
 
+function useTemplate(templateName:string,templates: Template[],workspaceFolder:string,forceUseDockerIgnore = false) {
+	const templateFile = findInstallObjFromName(templateName,templates)
+				if(templateFile){
+					createDockerFile(templateFile.path, workspaceFolder);
+					if (templateFile.ignoreFilePath) {
+						if(forceUseDockerIgnore){
+							createIgnoreDockerFile(templateFile.ignoreFilePath as string, workspaceFolder);
+						}
+						else{
+						vscode.window.showInformationMessage("A .dockerignore file exist for this template , do you want to use it ?", "yes", "no").then(response => {		
+						if (response === "yes") {createIgnoreDockerFile(templateFile.ignoreFilePath as string, workspaceFolder);}
+						});
+					}
+					}
+				}
+}
+
+function getWorkSpace():string | undefined {
+	const { workspace: { workspaceFolders } } = vscode;
+		const workspaceFolder = workspaceFolders ? workspaceFolders[0].uri.fsPath : null;
+		if(workspaceFolder){
+			return workspaceFolder;
+		}
+		else {
+			vscode.window.showInformationMessage("workspaceFolder not found");
+		}
+}
+
+interface CommandFromTreeView {
+	key:string;
+}
 function registerCommands(context:vscode.ExtensionContext, templates:Template[]){
-	let disposable = vscode.commands.registerCommand('dockerfiletemplate.generatedockerfile', () => {
+	const disposableGeneratedockerfile = vscode.commands.registerCommand('dockerfiletemplate.generatedockerfile', () => {
 		const { workspace: { workspaceFolders } } = vscode;
 		const workspaceFolder = workspaceFolders ? workspaceFolders[0].uri.fsPath : null;
 		if(workspaceFolder){
@@ -78,22 +109,33 @@ function registerCommands(context:vscode.ExtensionContext, templates:Template[])
 			});
 			vscode.window.showQuickPick(templatesNames).then(option => {
 				if (!option) {return;}
-				const templateFile = findInstallObjFromName(option,templates)
-				if(templateFile){
-					createDockerFile(templateFile.path, workspaceFolder);
-					if (templateFile.ignoreFilePath) {
-						vscode.window.showInformationMessage("A .dockerignore file exist for this template , do you want to use it ?", "yes", "no").then(response => {		
-						if (response === "yes") {createIgnoreDockerFile(templateFile.ignoreFilePath as string, workspaceFolder);}
-						});
-					}
-				}
+				useTemplate(option,templates,workspaceFolder);
 			});
 		}
 		else {
 			vscode.window.showInformationMessage("workspaceFolder not found");
 		}
 	});
-	context.subscriptions.push(disposable);
+	context.subscriptions.push(disposableGeneratedockerfile);
+	const disposableUseTemplate = vscode.commands.registerCommand('dockerfiletemplate.useTemplate', (template:CommandFromTreeView) => {
+		const templateName = template.key;
+		const workspace = getWorkSpace();
+		if(workspace){
+			console.log(templateName);
+			useTemplate(templateName,templates,workspace)
+		}
+	});
+	context.subscriptions.push(disposableUseTemplate);
+	const disposableUseTemplateWDockerIgnore = vscode.commands.registerCommand('dockerfiletemplate.useTemplateWDockerIgnore', (template:CommandFromTreeView) => {
+		const templateName = template.key;
+		const workspace = getWorkSpace();
+		if(workspace){
+			console.log(templateName);
+			useTemplate(templateName,templates,workspace,true)
+		}
+	});
+	console.log(context.subscriptions)
+	context.subscriptions.push(disposableUseTemplateWDockerIgnore);
 }
 
 

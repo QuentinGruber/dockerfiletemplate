@@ -10,10 +10,12 @@ export class DockerFileTemplate {
 	async setupFixView(context: vscode.ExtensionContext, templates: Template[]){
 		templates.forEach((template : Template) => {
 			this.tree[template.name] = {};
-			this.tree[template.name][`Install ${template.name}`] = false;
+			template.installs.forEach(templateFile => {
+				this.tree[template.name][`${templateFile.name}`] = false;
+			});
 		});
 		const view = vscode.window.createTreeView('dockerfiletemplate', { treeDataProvider: this.aNodeWithIdTreeDataProvider(), showCollapseAll: true });
-		view.message = "Liste des fix qui peuvent être utilisé :"
+		view.message = "Docker file templates availables :"
 		context.subscriptions.push(view);
 	}
 
@@ -50,9 +52,11 @@ export class DockerFileTemplate {
 		const treeElement = this.getTreeElement(key);
 		// An example of how to use codicons in a MarkdownString in a tree item tooltip.
 		const tooltip = new vscode.MarkdownString(`$(zap) Tooltip for ${key}`, true);
+		const command = {title:"test",command:"test"};
 		return {
 			label: /**vscode.TreeItemLabel**/<any>{ label: key },
 			tooltip,
+			command,
 			collapsibleState: treeElement && Object.keys(treeElement).length ? vscode.TreeItemCollapsibleState.Collapsed : vscode.TreeItemCollapsibleState.None
 		};
 	}

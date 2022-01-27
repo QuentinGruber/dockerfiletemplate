@@ -21,11 +21,29 @@
 		"url": "git+https://github.com/QuentinGruber/dockerfiletemplate.git"
 	},
 	"contributes": {
+		"menus": {
+			"view/item/context": [
+			  {
+				"command": "dockerfiletemplate.useTemplate"
+			  },
+			  {
+				"command": "dockerfiletemplate.useTemplateWDockerIgnore"
+			  }
+			]
+		  },
 		"commands": [
 			{
 				"command": "dockerfiletemplate.generatedockerfile",
 				"title": "Generate Docker file"
-			}
+			},
+			{
+				"command": "dockerfiletemplate.useTemplate",
+				"title": "useTemplate"
+			  },
+			  {
+				"command": "dockerfiletemplate.useTemplateWDockerIgnore",
+				"title": "useTemplateWDockerIgnore"
+			  }
 		],
 		"viewsContainers": {
 			"activitybar": [
