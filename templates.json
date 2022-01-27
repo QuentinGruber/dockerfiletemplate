@@ -1,0 +1,27 @@
+[
+    {"name":"Deno app",
+        "installs":[
+            {"name":"Deno app with npm","path":"../templates/dockerfiles/Deno_app.dockerfile"}
+        ] 
+       },
+       {"name":"Angular app",
+        "installs":[
+            {"name":"Angular app with npm","path":"../templates/dockerfiles/Angular_app.dockerfile","ignoreFilePath":"../templates/ignorefiles/Angular_app"}
+        ] 
+       },
+       {"name":"Nodejs app",
+        "installs":[
+            {"name":"Nodejs app with npm","path":"../templates/dockerfiles/Nodejs_app.dockerfile","ignoreFilePath":"../templates/ignorefiles/Nodejs_app"}
+        ] 
+       },
+       {"name":"Reactjs app",
+        "installs":[
+            {"name":"Reactjs app with npm","path":"../templates/dockerfiles/Reactjs_app.dockerfile","ignoreFilePath":"../templates/ignorefiles/Reactjs_app"}
+        ] 
+       },
+       {"name":"Vuejs app",
+        "installs":[
+            {"name":"Vuejs app with npm","path":"../templates/dockerfiles/Vuejs_app.dockerfile","ignoreFilePath":"../templates/ignorefiles/Vuejs_app"}
+        ] 
+       }
+]

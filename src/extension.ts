@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
-import * as path from 'path';
 import * as fs from 'fs';
+import { normalize } from "path";
 import { DockerFileTemplate } from './views/dockerfiletemplate';
 
 export function getTemplates(templatePath: fs.PathLike): Array<Array<string>> {
@@ -12,50 +12,81 @@ export function getTemplates(templatePath: fs.PathLike): Array<Array<string>> {
 	return [templates, files];
 }
 
-export function createDockerFile(option: any, templatePath: String, workspaceFolder: String): Boolean {
+export function createDockerFile(templatePath: String, workspaceFolder: String): Boolean {
 	try {
-		const data = fs.readFileSync(`${templatePath}/${option}.dockerfile`);
+		const data = fs.readFileSync(normalize(`${__dirname}/${templatePath}`));
 	  fs.writeFileSync(`${workspaceFolder}/Dockerfile`, data);
-	} catch (error) {
-		return false;
+	} catch (error:any) {
+		throw new Error(error);
 	}
 	return true;
 }
 
-export function createIgnoreDockerFile(option: any, templatePath: String, workspaceFolder: String): Boolean {
+export function createIgnoreDockerFile(templatePath: String, workspaceFolder: String): Boolean {
 	try {
-		const data = fs.readFileSync(`${templatePath}/.dockerignore ${option}`);
+		const data = fs.readFileSync(normalize(`${__dirname}/${templatePath}`));
 		fs.writeFileSync(`${workspaceFolder}/.dockerignore`, data);
-	} catch (error) {
-		return false;
+	} catch (error:any) {
+		throw new Error(error);
 	}
 	return true;
 }
 
-function checkForIgnoreFile(choosedFile:string,allFiles:string[],templatePath:string,workspaceFolder:string){
-	allFiles.forEach((file:string) => {
-		// check if a ignore file exist
-		if (file === `.dockerignore ${choosedFile}`) {
-			vscode.window.showInformationMessage("A .dockerignore file exist for this template , do you want to use it ?", "yes", "no").then(response => {		
-			if (response === "yes") {createIgnoreDockerFile(choosedFile , templatePath, workspaceFolder);}
-			});
-		}
-	});
+interface TemplateFile {
+	name:string;
+	path:string;
+	ignoreFilePath?:string;
+}
+export interface Template {
+	name:string;
+	installs:TemplateFile[]
 }
 
 export function activate(context: vscode.ExtensionContext) {
-	const templatePath = path.join(__dirname, '../templates');
-
-	const [ templates, allFiles ] :Array<Array<string>> = getTemplates(templatePath);
+	const templates:Template[] = require("../templates.json")
 	new DockerFileTemplate(context,templates);
+	registerCommands(context,templates);
+
+}
+
+function findInstallObjFromName(name:string,templates:Template[]):TemplateFile | undefined {
+	for (let templateIndex = 0; templateIndex < templates.length; templateIndex++) {
+		const template = templates[templateIndex];
+		if(name.includes(template.name)){
+			for (let index = 0; index < template.installs.length; index++) {
+				const install = template.installs[index];
+				if(install.name === name){
+					return install;
+				}
+			}
+			throw new Error(`Can't find ${name} inside ${template.name}`);
+		}
+	}
+	throw new Error("Can't find "+name);
+}
+
+function registerCommands(context:vscode.ExtensionContext, templates:Template[]){
 	let disposable = vscode.commands.registerCommand('dockerfiletemplate.generatedockerfile', () => {
 		const { workspace: { workspaceFolders } } = vscode;
 		const workspaceFolder = workspaceFolders ? workspaceFolders[0].uri.fsPath : null;
 		if(workspaceFolder){
-			vscode.window.showQuickPick(templates).then(option => {
+			const templatesNames:string[] = []
+			templates.forEach(template => {
+				template.installs.forEach(install => {
+					templatesNames.push(install.name)
+				});
+			});
+			vscode.window.showQuickPick(templatesNames).then(option => {
 				if (!option) {return;}
-				checkForIgnoreFile(option,allFiles,templatePath,workspaceFolder);
-				createDockerFile(option, templatePath, workspaceFolder);
+				const templateFile = findInstallObjFromName(option,templates)
+				if(templateFile){
+					createDockerFile(templateFile.path, workspaceFolder);
+					if (templateFile.ignoreFilePath) {
+						vscode.window.showInformationMessage("A .dockerignore file exist for this template , do you want to use it ?", "yes", "no").then(response => {		
+						if (response === "yes") {createIgnoreDockerFile(templateFile.ignoreFilePath as string, workspaceFolder);}
+						});
+					}
+				}
 			});
 		}
 		else {
@@ -64,5 +95,6 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 	context.subscriptions.push(disposable);
 }
+
 
 export function deactivate() { }

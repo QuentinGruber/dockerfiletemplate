@@ -1,15 +1,16 @@
 import * as vscode from 'vscode';
+import { Template } from '../extension';
 
 export class DockerFileTemplate {
 	tree:any = {};
-	constructor(context: vscode.ExtensionContext, templates: string[]) {
+	constructor(context: vscode.ExtensionContext, templates: Template[]) {
 		this.setupFixView(context,templates);
 		}
 
-	async setupFixView(context: vscode.ExtensionContext, templates: string[]){
-		templates.forEach((template : string) => {
-			this.tree[template] = {};
-			this.tree[template][`Install ${template}`] = false;
+	async setupFixView(context: vscode.ExtensionContext, templates: Template[]){
+		templates.forEach((template : Template) => {
+			this.tree[template.name] = {};
+			this.tree[template.name][`Install ${template.name}`] = false;
 		});
 		const view = vscode.window.createTreeView('dockerfiletemplate', { treeDataProvider: this.aNodeWithIdTreeDataProvider(), showCollapseAll: true });
 		view.message = "Liste des fix qui peuvent être utilisé :"
