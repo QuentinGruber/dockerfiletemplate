@@ -79,6 +79,13 @@
 					],
 					"default": null,
 					"description": "Will always add the associated .dockerignore file to a template if available."
+				},
+				"dockerfiletemplate.askToStar": {
+					"type": [
+						"boolean"
+					],
+					"default": true,
+					"description": "Will ask the user to star the github repo."
 				}
 			}
 		}

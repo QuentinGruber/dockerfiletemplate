@@ -137,6 +137,30 @@ function useTemplate(
             }
           });
       }
+
+      if(getConfiguration("askToStar",true)){
+        const askForStarsOptions = [ "Open github repository","I've already star it !","Remind me later"];
+        vscode.window
+          .showInformationMessage(
+            "If dockerfiletemplate helped you, leave a star on the github repository to show your support!",
+            ...askForStarsOptions
+          )
+          .then((response) => {
+            const optionIndex = askForStarsOptions.findIndex((e) => {
+              return e === response;
+            });
+            switch (optionIndex) {
+              case 0: // yes
+              vscode.env.openExternal(vscode.Uri.parse('https://github.com/QuentinGruber/dockerfiletemplate'));
+                break;
+              case 1: // no
+                  updateConfiguration("askToStar",false);
+                break;
+              default:
+                break;
+            }
+          });
+      }
     }
   }
 }
