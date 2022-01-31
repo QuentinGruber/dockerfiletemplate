@@ -23,14 +23,14 @@
 	"contributes": {
 		"menus": {
 			"view/item/context": [
-			  {
-				"command": "dockerfiletemplate.useTemplate"
-			  },
-			  {
-				"command": "dockerfiletemplate.useTemplateWDockerIgnore"
-			  }
+				{
+					"command": "dockerfiletemplate.useTemplate"
+				},
+				{
+					"command": "dockerfiletemplate.useTemplateWDockerIgnore"
+				}
 			]
-		  },
+		},
 		"commands": [
 			{
 				"command": "dockerfiletemplate.generatedockerfile",
@@ -39,11 +39,11 @@
 			{
 				"command": "dockerfiletemplate.useTemplate",
 				"title": "useTemplate"
-			  },
-			  {
+			},
+			{
 				"command": "dockerfiletemplate.useTemplateWDockerIgnore",
 				"title": "useTemplateWDockerIgnore"
-			  }
+			}
 		],
 		"viewsContainers": {
 			"activitybar": [
@@ -66,11 +66,13 @@
 			"type": "object",
 			"title": "dockerfiletemplate",
 			"properties": {
-			  "dockerfiletemplate.alwaysAddIgnoreFiles": {
-				"type": ["boolean"],
-				"default": null,
-				"description": "Will always add the associated .dockerignore file to a template if available."
-			  }
+				"dockerfiletemplate.alwaysAddIgnoreFiles": {
+					"type": [
+						"boolean"
+					],
+					"default": null,
+					"description": "Will always add the associated .dockerignore file to a template if available."
+				}
 			}
 		}
 	},
@@ -81,6 +83,7 @@
 		"watch": "tsc -watch -p ./",
 		"pretest": "npm run compile && npm run lint",
 		"lint": "eslint src --ext ts",
+		"prettier_sources": "prettier --write ./src",
 		"test": "node ./out/test/runTest.js"
 	},
 	"devDependencies": {
@@ -92,6 +95,7 @@
 		"eslint": "^7.15.0",
 		"glob": "^7.1.6",
 		"mocha": "^9.1.2",
+		"prettier": "^2.5.1",
 		"typescript": "^4.5.5",
 		"vscode-test": "^1.4.1"
 	}
