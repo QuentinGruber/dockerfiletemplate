@@ -57,7 +57,7 @@ export class DockerFileTemplate {
     const treeElement = this.getTreeElement(key);
     // An example of how to use codicons in a MarkdownString in a tree item tooltip.
     const tooltip = new vscode.MarkdownString(
-      `$(zap) Tooltip for ${key}`,
+      `Right-click to see available actions.`,
       true
     );
     const command = { title: "test", command: "test" };
