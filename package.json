@@ -61,6 +61,17 @@
 					"name": ""
 				}
 			]
+		},
+		"configuration": {
+			"type": "object",
+			"title": "dockerfiletemplate",
+			"properties": {
+			  "dockerfiletemplate.alwaysAddIgnoreFiles": {
+				"type": ["boolean"],
+				"default": null,
+				"description": "Will always add the associated .dockerignore file to a template if available."
+			  }
+			}
 		}
 	},
 	"scripts": {

@@ -65,18 +65,40 @@ function findInstallObjFromName(name:string,templates:Template[]):TemplateFile |
 	throw new Error("Can't find "+name);
 }
 
+function updateConfiguration(parameter:string,value:any) {
+	vscode.workspace.getConfiguration('dockerfiletemplate').update(parameter, value, vscode.ConfigurationTarget.Global)
+}
+
+function getConfiguration(parameter:string,value:any) {
+	return vscode.workspace.getConfiguration('dockerfiletemplate').get(parameter, value);
+}
+
+
+const createIgnoreFileOptions = ["yes", "no","yes forever"]
 function useTemplate(templateName:string,templates: Template[],workspaceFolder:string,forceUseDockerIgnore = false) {
 	const templateFile = findInstallObjFromName(templateName,templates)
+	const alwaysAddIgnoreFiles: Boolean = getConfiguration("alwaysAddIgnoreFiles",false);
 				if(templateFile){
 					createDockerFile(templateFile.path, workspaceFolder);
 					if (templateFile.ignoreFilePath) {
-						if(forceUseDockerIgnore){
+						if(forceUseDockerIgnore || alwaysAddIgnoreFiles){
 							createIgnoreDockerFile(templateFile.ignoreFilePath as string, workspaceFolder);
 						}
 						else{
-						vscode.window.showInformationMessage("A .dockerignore file exist for this template , do you want to use it ?", "yes", "no").then(response => {		
-						if (response === "yes") {createIgnoreDockerFile(templateFile.ignoreFilePath as string, workspaceFolder);}
-						});
+							vscode.window.showInformationMessage("A .dockerignore file exist for this template , do you want to use it ?",...createIgnoreFileOptions).then(response => {		
+							const optionIndex = createIgnoreFileOptions.findIndex((e)=>{ return e === response});
+							switch (optionIndex) {
+								case 2: // yes forever
+									updateConfiguration("alwaysAddIgnoreFiles",true);
+								case 0: // yes
+									createIgnoreDockerFile(templateFile.ignoreFilePath as string, workspaceFolder);
+									break;
+								case 1: // no
+									break;
+								default:
+									break;
+							}
+							});
 					}
 					}
 				}
@@ -121,8 +143,8 @@ function registerCommands(context:vscode.ExtensionContext, templates:Template[])
 		const templateName = template.key;
 		const workspace = getWorkSpace();
 		if(workspace){
-			console.log(templateName);
-			useTemplate(templateName,templates,workspace)
+			const alwaysAddIgnoreFiles = getConfiguration("alwaysAddIgnoreFiles", false);
+			useTemplate(templateName,templates,workspace,alwaysAddIgnoreFiles)
 		}
 	});
 	context.subscriptions.push(disposableUseTemplate);
@@ -130,7 +152,6 @@ function registerCommands(context:vscode.ExtensionContext, templates:Template[])
 		const templateName = template.key;
 		const workspace = getWorkSpace();
 		if(workspace){
-			console.log(templateName);
 			useTemplate(templateName,templates,workspace,true)
 		}
 	});
