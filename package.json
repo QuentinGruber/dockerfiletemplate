@@ -28,6 +28,9 @@
 				},
 				{
 					"command": "dockerfiletemplate.useTemplateWDockerIgnore"
+				},
+				{
+					"command": "dockerfiletemplate.previewTemplate"
 				}
 			]
 		},
@@ -38,11 +41,15 @@
 			},
 			{
 				"command": "dockerfiletemplate.useTemplate",
-				"title": "useTemplate"
+				"title": "Use template"
 			},
 			{
 				"command": "dockerfiletemplate.useTemplateWDockerIgnore",
-				"title": "useTemplateWDockerIgnore"
+				"title": "Use template W/ .dockerignore"
+			},
+			{
+				"command": "dockerfiletemplate.previewTemplate",
+				"title": "Preview dockerfile"
 			}
 		],
 		"viewsContainers": {

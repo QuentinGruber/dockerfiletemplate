@@ -141,6 +141,12 @@ function useTemplate(
   }
 }
 
+function openPreview(path:string){
+  const openPath = vscode.Uri.file(`${__dirname}/${path}`);
+  vscode.workspace.openTextDocument(openPath).then(doc => {
+      vscode.window.showTextDocument(doc);
+  });
+}
 function getWorkSpace(): string | undefined {
   const {
     workspace: { workspaceFolders },
@@ -215,8 +221,21 @@ function registerCommands(
       }
     }
   );
-  console.log(context.subscriptions);
   context.subscriptions.push(disposableUseTemplateWDockerIgnore);
+  const disposablePreviewTemplate = vscode.commands.registerCommand(
+    "dockerfiletemplate.previewTemplate",
+    (template: CommandFromTreeView) => {
+      const templateName:any = template.key;
+      const workspace = getWorkSpace();
+      if (workspace) {
+        const templateFile = findInstallObjFromName(templateName, templates);
+        if(templateFile){
+          openPreview(templateFile.path)
+        }
+      }
+    }
+  );
+  context.subscriptions.push(disposablePreviewTemplate); 
 }
 
 export function deactivate() {}
