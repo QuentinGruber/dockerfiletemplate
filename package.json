@@ -24,13 +24,16 @@
 		"menus": {
 			"view/item/context": [
 				{
-					"command": "dockerfiletemplate.useTemplate"
+					"command": "dockerfiletemplate.useTemplate",
+					"when": "view == dockerfiletemplate"
 				},
 				{
-					"command": "dockerfiletemplate.useTemplateWDockerIgnore"
+					"command": "dockerfiletemplate.useTemplateWDockerIgnore",
+					"when": "view == dockerfiletemplate"
 				},
 				{
-					"command": "dockerfiletemplate.previewTemplate"
+					"command": "dockerfiletemplate.previewTemplate",
+					"when": "view == dockerfiletemplate"
 				}
 			]
 		},
