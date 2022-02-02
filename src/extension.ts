@@ -251,12 +251,9 @@ function registerCommands(
     "dockerfiletemplate.previewTemplate",
     (template: CommandFromTreeView) => {
       const templateName: any = template.key;
-      const workspace = getWorkSpace();
-      if (workspace) {
-        const templateFile = findInstallObjFromName(templateName, templates);
-        if (templateFile) {
-          openPreview(templateFile.path);
-        }
+      const templateFile = findInstallObjFromName(templateName, templates);
+      if (templateFile) {
+        openPreview(templateFile.path);
       }
     }
   );
