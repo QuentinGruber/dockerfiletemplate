@@ -10,8 +10,7 @@ And if dockerfiletemplate helps you in any way, leave a star on the github repos
 
 Choose which dockerfile template you wanna use in your project and 🎉 TADA 🎉
 
-`Example of using dockerfiletemplate`
-![generatedockerfile](https://raw.githubusercontent.com/QuentinGruber/dockerfiletemplate/master/assets/DockerFileTemplate_GenerateDockerFile.gif)
+![generatedockerfile](https://raw.githubusercontent.com/QuentinGruber/dockerfiletemplate/master/assets/demo.png)
 
 > Tip: If a .dockerignore file has been associated to the template a window will ask you if you want to use it.
 
