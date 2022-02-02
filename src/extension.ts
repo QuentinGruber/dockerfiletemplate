@@ -45,7 +45,7 @@ export function activate(context: vscode.ExtensionContext) {
   registerCommands(context, templates);
 }
 
-function findInstallObjFromName(
+export function findInstallObjFromName(
   name: string,
   templates: Template[]
 ): TemplateFile | undefined {

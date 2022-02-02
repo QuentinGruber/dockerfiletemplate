@@ -1,14 +1,16 @@
 import * as vscode from "vscode";
-import { Template } from "../extension";
+import { findInstallObjFromName, Template } from "../extension";
 
 export class DockerFileTemplate {
   tree: any = {};
+  templates: Template[];
   constructor(context: vscode.ExtensionContext, templates: Template[]) {
-    this.setupFixView(context, templates);
+    this.templates = templates;
+    this.setupDFTView(context);
   }
 
-  async setupFixView(context: vscode.ExtensionContext, templates: Template[]) {
-    templates.forEach((template: Template) => {
+  async setupDFTView(context: vscode.ExtensionContext) {
+    this.templates.forEach((template: Template) => {
       this.tree[template.name] = {};
       template.installs.forEach((templateFile) => {
         this.tree[template.name][`${templateFile.name}`] = false;
@@ -60,11 +62,24 @@ export class DockerFileTemplate {
       `Right-click to see available actions.`,
       true
     );
-    const command = { title: "test", command: "test" };
+    let contextValue;
+    // @ts-ignore
+    if (
+      !this.templates.find((e) => {
+        return e.name === key;
+      })
+    ) {
+      const obj = findInstallObjFromName(key, this.templates);
+      if (obj?.ignoreFilePath) {
+        contextValue = "templateWignore";
+      } else {
+        contextValue = "template";
+      }
+    }
     return {
       label: /**vscode.TreeItemLabel**/ <any>{ label: key },
+      contextValue,
       tooltip,
-      command,
       collapsibleState:
         treeElement && Object.keys(treeElement).length
           ? vscode.TreeItemCollapsibleState.Collapsed

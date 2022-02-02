@@ -25,15 +25,15 @@
 			"view/item/context": [
 				{
 					"command": "dockerfiletemplate.useTemplate",
-					"when": "view == dockerfiletemplate"
+					"when": "view == dockerfiletemplate && viewItem == templateWignore || viewItem == template"
 				},
 				{
 					"command": "dockerfiletemplate.useTemplateWDockerIgnore",
-					"when": "view == dockerfiletemplate"
+					"when": "view == dockerfiletemplate && viewItem == templateWignore"
 				},
 				{
 					"command": "dockerfiletemplate.previewTemplate",
-					"when": "view == dockerfiletemplate"
+					"when": "view == dockerfiletemplate && viewItem == templateWignore || viewItem == template"
 				}
 			]
 		},
@@ -44,7 +44,8 @@
 			},
 			{
 				"command": "dockerfiletemplate.useTemplate",
-				"title": "Use template"
+				"title": "Use template",
+				"icon":"$(zap)"
 			},
 			{
 				"command": "dockerfiletemplate.useTemplateWDockerIgnore",
