@@ -1,26 +1,15 @@
 import * as vscode from "vscode";
-import * as fs from "fs";
+import { readFileSync, writeFileSync, readdirSync, PathLike } from "fs";
 import { normalize } from "path";
 import { DockerFileTemplate } from "./views/dockerfiletemplate";
-
-export function getTemplates(templatePath: fs.PathLike): Array<Array<string>> {
-  const files = fs.readdirSync(templatePath);
-  const templates: Array<string> = [];
-  files
-    .filter((e) => (e.includes(".dockerignore") ? false : true))
-    .forEach((file) => {
-      templates.push(file.substr(0, file.length - 11)); // to remove ".dockerfile"
-    });
-  return [templates, files];
-}
 
 export function createDockerFile(
   templatePath: String,
   workspaceFolder: String
 ): Boolean {
   try {
-    const data = fs.readFileSync(normalize(`${__dirname}/${templatePath}`));
-    fs.writeFileSync(`${workspaceFolder}/Dockerfile`, data);
+    const data = readFileSync(normalize(`${__dirname}/${templatePath}`));
+    writeFileSync(`${workspaceFolder}/Dockerfile`, data);
   } catch (error: any) {
     throw new Error(error);
   }
@@ -32,8 +21,8 @@ export function createIgnoreDockerFile(
   workspaceFolder: String
 ): Boolean {
   try {
-    const data = fs.readFileSync(normalize(`${__dirname}/${templatePath}`));
-    fs.writeFileSync(`${workspaceFolder}/.dockerignore`, data);
+    const data = readFileSync(normalize(`${__dirname}/${templatePath}`));
+    writeFileSync(`${workspaceFolder}/.dockerignore`, data);
   } catch (error: any) {
     throw new Error(error);
   }
@@ -138,8 +127,12 @@ function useTemplate(
           });
       }
 
-      if(getConfiguration("askToStar",true)){
-        const askForStarsOptions = [ "Open github repository","I've already star it !","Remind me later"];
+      if (getConfiguration("askToStar", true)) {
+        const askForStarsOptions = [
+          "Open github repository",
+          "I've already star it !",
+          "Remind me later",
+        ];
         vscode.window
           .showInformationMessage(
             "If dockerfiletemplate helped you, leave a star on the github repository to show your support!",
@@ -151,10 +144,14 @@ function useTemplate(
             });
             switch (optionIndex) {
               case 0: // yes
-              vscode.env.openExternal(vscode.Uri.parse('https://github.com/QuentinGruber/dockerfiletemplate'));
+                vscode.env.openExternal(
+                  vscode.Uri.parse(
+                    "https://github.com/QuentinGruber/dockerfiletemplate"
+                  )
+                );
                 break;
               case 1: // no
-                  updateConfiguration("askToStar",false);
+                updateConfiguration("askToStar", false);
                 break;
               default:
                 break;
@@ -165,10 +162,10 @@ function useTemplate(
   }
 }
 
-function openPreview(path:string){
+function openPreview(path: string) {
   const openPath = vscode.Uri.file(`${__dirname}/${path}`);
-  vscode.workspace.openTextDocument(openPath).then(doc => {
-      vscode.window.showTextDocument(doc);
+  vscode.workspace.openTextDocument(openPath).then((doc) => {
+    vscode.window.showTextDocument(doc);
   });
 }
 function getWorkSpace(): string | undefined {
@@ -181,7 +178,9 @@ function getWorkSpace(): string | undefined {
   if (workspaceFolder) {
     return workspaceFolder;
   } else {
-    vscode.window.showInformationMessage("workspaceFolder not found");
+    vscode.window.showInformationMessage(
+      "workspace folder not found, please open a folder to use dockerfiletemplate."
+    );
   }
 }
 
@@ -215,7 +214,9 @@ function registerCommands(
           useTemplate(option, templates, workspaceFolder);
         });
       } else {
-        vscode.window.showInformationMessage("workspaceFolder not found");
+        vscode.window.showInformationMessage(
+          "workspace folder not found, please open a folder to use dockerfiletemplate."
+        );
       }
     }
   );
@@ -249,17 +250,17 @@ function registerCommands(
   const disposablePreviewTemplate = vscode.commands.registerCommand(
     "dockerfiletemplate.previewTemplate",
     (template: CommandFromTreeView) => {
-      const templateName:any = template.key;
+      const templateName: any = template.key;
       const workspace = getWorkSpace();
       if (workspace) {
         const templateFile = findInstallObjFromName(templateName, templates);
-        if(templateFile){
-          openPreview(templateFile.path)
+        if (templateFile) {
+          openPreview(templateFile.path);
         }
       }
     }
   );
-  context.subscriptions.push(disposablePreviewTemplate); 
+  context.subscriptions.push(disposablePreviewTemplate);
 }
 
 export function deactivate() {}
