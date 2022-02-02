@@ -1,7 +1,8 @@
 [
     {"name":"Deno app",
         "installs":[
-            {"name":"Deno app with npm","path":"../templates/dockerfiles/Deno_app.dockerfile"}
+            {"name":"Deno app alpine OS","path":"../templates/dockerfiles/Deno_app_alpine.dockerfile"},
+            {"name":"Deno app binary only","path":"../templates/dockerfiles/Deno_app_bin.dockerfile"}
         ] 
        },
        {"name":"Angular app",
