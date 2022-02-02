@@ -57,7 +57,7 @@
 				{
 					"id": "dockerfiletemplate",
 					"title": "dockerfiletemplate",
-					"icon": ""
+					"icon": "assets/dockerfiletemplate_activitybar_icon.svg"
 				}
 			]
 		},
