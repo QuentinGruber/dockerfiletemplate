@@ -60,7 +60,7 @@
 			"activitybar": [
 				{
 					"id": "dockerfiletemplate",
-					"title": "dockerfiletemplate",
+					"title": "dft",
 					"icon": "assets/dockerfiletemplate_activitybar_icon.svg"
 				}
 			]
@@ -69,7 +69,7 @@
 			"dockerfiletemplate": [
 				{
 					"id": "dockerfiletemplate",
-					"name": ""
+					"name": "templates"
 				}
 			]
 		},
