@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { readFileSync, writeFileSync, readdirSync, PathLike } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 import { normalize } from "path";
 import { DockerFileTemplate } from "./views/dockerfiletemplate";
 
