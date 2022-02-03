@@ -1,5 +1,7 @@
-# dockerfile from https://github.com/hayd/deno-docker
-FROM hayd/alpine-deno:latest
+FROM denoland/deno:alpine
+# The port that your application listens to.
+EXPOSE 1993
+
 WORKDIR /app
 
 # Prefer not to run as root.
@@ -14,8 +16,5 @@ RUN deno cache deps.ts
 ADD . .
 # Compile the main app so that it doesn't need to be compiled each startup/entry.
 RUN deno cache main.ts
-# Copy all not-ignored files to volume
-COPY . .
-# The port that your application listens to.
-EXPOSE 8000
+
 CMD ["run", "--allow-net", "main.ts"]

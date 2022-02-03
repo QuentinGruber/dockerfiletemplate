@@ -1,0 +1,33 @@
+[
+    {"name":"Deno app",
+        "installs":[
+            {"name":"Deno app alpine OS","path":"../templates/dockerfiles/Deno_app_alpine.dockerfile"},
+            {"name":"Deno app binary only","path":"../templates/dockerfiles/Deno_app_bin.dockerfile"}
+        ] 
+       },
+       {"name":"Angular app",
+        "installs":[
+            {"name":"Angular app with npm","path":"../templates/dockerfiles/Angular_app.dockerfile","ignoreFilePath":"../templates/ignorefiles/Angular_app"},
+            {"name":"Angular app with yarn","path":"../templates/dockerfiles/Angular_app_yarn.dockerfile","ignoreFilePath":"../templates/ignorefiles/Angular_app"}
+        ] 
+       },
+       {"name":"Nodejs app",
+        "installs":[
+            {"name":"Nodejs app with npm","path":"../templates/dockerfiles/Nodejs_app.dockerfile","ignoreFilePath":"../templates/ignorefiles/Nodejs_app"},
+            {"name":"Nodejs app with yarn","path":"../templates/dockerfiles/Nodejs_app_yarn.dockerfile","ignoreFilePath":"../templates/ignorefiles/Nodejs_app"}
+        ] 
+       },
+       {"name":"Reactjs app",
+        "installs":[
+            {"name":"Reactjs app with npm","path":"../templates/dockerfiles/Reactjs_app.dockerfile","ignoreFilePath":"../templates/ignorefiles/Reactjs_app"},
+            {"name":"Reactjs app with yarn","path":"../templates/dockerfiles/Reactjs_app_yarn.dockerfile","ignoreFilePath":"../templates/ignorefiles/Reactjs_app"}
+        ] 
+       },
+       {"name":"Vuejs app",
+        "installs":[
+            {"name":"Vuejs app with npm","path":"../templates/dockerfiles/Vuejs_app.dockerfile","ignoreFilePath":"../templates/ignorefiles/Vuejs_app"},
+            {"name":"Vuejs app with yarn","path":"../templates/dockerfiles/Vuejs_app_yarn.dockerfile","ignoreFilePath":"../templates/ignorefiles/Vuejs_app"}
+
+        ] 
+       }
+]

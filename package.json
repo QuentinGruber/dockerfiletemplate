@@ -3,8 +3,8 @@
 	"publisher": "QuentinGruber",
 	"displayName": "Docker File Template",
 	"description": "Quick Dockerfile for your project",
-	"icon": "assets/Docker.png",
-	"version": "1.0.6",
+	"icon": "assets/logo-dockerfiletemplate.png",
+	"version": "2.0.0",
 	"engines": {
 		"vscode": "^1.52.0"
 	},
@@ -12,7 +12,8 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:dockerfiletemplate.generatedockerfile"
+		"onCommand:dockerfiletemplate.generatedockerfile",
+		"onView:dockerfiletemplate"
 	],
 	"main": "./out/extension.js",
 	"repository": {
@@ -20,12 +21,78 @@
 		"url": "git+https://github.com/QuentinGruber/dockerfiletemplate.git"
 	},
 	"contributes": {
+		"menus": {
+			"view/item/context": [
+				{
+					"command": "dockerfiletemplate.useTemplate",
+					"when": "view == dockerfiletemplate && viewItem == templateWignore || viewItem == template"
+				},
+				{
+					"command": "dockerfiletemplate.useTemplateWDockerIgnore",
+					"when": "view == dockerfiletemplate && viewItem == templateWignore"
+				},
+				{
+					"command": "dockerfiletemplate.previewTemplate",
+					"when": "view == dockerfiletemplate && viewItem == templateWignore || viewItem == template"
+				}
+			]
+		},
 		"commands": [
 			{
 				"command": "dockerfiletemplate.generatedockerfile",
 				"title": "Generate Docker file"
+			},
+			{
+				"command": "dockerfiletemplate.useTemplate",
+				"title": "Use template",
+				"icon":"$(zap)"
+			},
+			{
+				"command": "dockerfiletemplate.useTemplateWDockerIgnore",
+				"title": "Use template W/ .dockerignore"
+			},
+			{
+				"command": "dockerfiletemplate.previewTemplate",
+				"title": "Preview dockerfile"
 			}
-		]
+		],
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "dockerfiletemplate",
+					"title": "dft",
+					"icon": "assets/dockerfiletemplate_activitybar_icon.svg"
+				}
+			]
+		},
+		"views": {
+			"dockerfiletemplate": [
+				{
+					"id": "dockerfiletemplate",
+					"name": "templates"
+				}
+			]
+		},
+		"configuration": {
+			"type": "object",
+			"title": "dockerfiletemplate",
+			"properties": {
+				"dockerfiletemplate.alwaysAddIgnoreFiles": {
+					"type": [
+						"boolean"
+					],
+					"default": null,
+					"description": "Will always add the associated .dockerignore file to a template if available."
+				},
+				"dockerfiletemplate.askToStar": {
+					"type": [
+						"boolean"
+					],
+					"default": true,
+					"description": "Will ask the user to star the github repo."
+				}
+			}
+		}
 	},
 	"scripts": {
 		"vscode:build": "vsce package",
@@ -34,19 +101,20 @@
 		"watch": "tsc -watch -p ./",
 		"pretest": "npm run compile && npm run lint",
 		"lint": "eslint src --ext ts",
+		"prettier_sources": "prettier --write ./src",
 		"test": "node ./out/test/runTest.js"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.3",
 		"@types/mocha": "^9.0.0",
-		"@types/node": "^16.10.3",
 		"@types/vscode": "^1.52.0",
 		"@typescript-eslint/eslint-plugin": "^4.9.0",
 		"@typescript-eslint/parser": "^4.9.0",
 		"eslint": "^7.15.0",
 		"glob": "^7.1.6",
 		"mocha": "^9.1.2",
-		"typescript": "^4.1.2",
+		"prettier": "^2.5.1",
+		"typescript": "^4.5.5",
 		"vscode-test": "^1.4.1"
 	}
 }
