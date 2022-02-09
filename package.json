@@ -4,7 +4,7 @@
 	"displayName": "Docker File Template",
 	"description": "Quick Dockerfile for your project",
 	"icon": "assets/logo-dockerfiletemplate.png",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"engines": {
 		"vscode": "^1.52.0"
 	},
@@ -45,7 +45,7 @@
 			{
 				"command": "dockerfiletemplate.useTemplate",
 				"title": "Use template",
-				"icon":"$(zap)"
+				"icon": "$(zap)"
 			},
 			{
 				"command": "dockerfiletemplate.useTemplateWDockerIgnore",
