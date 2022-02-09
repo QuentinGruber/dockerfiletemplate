@@ -5,12 +5,6 @@
             {"name":"Deno app binary only","path":"../templates/dockerfiles/Deno_app_bin.dockerfile"}
         ] 
        },
-       {"name":"Angular app",
-        "installs":[
-            {"name":"Angular app with npm","path":"../templates/dockerfiles/Angular_app.dockerfile","ignoreFilePath":"../templates/ignorefiles/Angular_app"},
-            {"name":"Angular app with yarn","path":"../templates/dockerfiles/Angular_app_yarn.dockerfile","ignoreFilePath":"../templates/ignorefiles/Angular_app"}
-        ] 
-       },
        {"name":"Nodejs app",
         "installs":[
             {"name":"Nodejs app with npm","path":"../templates/dockerfiles/Nodejs_app.dockerfile","ignoreFilePath":"../templates/ignorefiles/Nodejs_app"},
@@ -28,6 +22,24 @@
             {"name":"Vuejs app with npm","path":"../templates/dockerfiles/Vuejs_app.dockerfile","ignoreFilePath":"../templates/ignorefiles/Vuejs_app"},
             {"name":"Vuejs app with yarn","path":"../templates/dockerfiles/Vuejs_app_yarn.dockerfile","ignoreFilePath":"../templates/ignorefiles/Vuejs_app"}
 
+        ] 
+       },
+       {"name":"Angular app",
+        "installs":[
+            {"name":"Angular app with npm","path":"../templates/dockerfiles/Angular_app.dockerfile","ignoreFilePath":"../templates/ignorefiles/Angular_app"},
+            {"name":"Angular app with yarn","path":"../templates/dockerfiles/Angular_app_yarn.dockerfile","ignoreFilePath":"../templates/ignorefiles/Angular_app"}
+        ] 
+       },
+       {"name":"Rust app",
+        "installs":[
+            {"name":"Rust app with cargo","path":"../templates/dockerfiles/Rust_app_cargo.dockerfile","ignoreFilePath":"../templates/ignorefiles/Rust_app_cargo"},
+            {"name":"Rust app with rustc","path":"../templates/dockerfiles/Rust_app_rustc.dockerfile"}
+
+        ] 
+       },
+       {"name":"Go app",
+        "installs":[
+            {"name":"Go app ","path":"../templates/dockerfiles/Go_app.dockerfile"}
         ] 
        }
 ]
