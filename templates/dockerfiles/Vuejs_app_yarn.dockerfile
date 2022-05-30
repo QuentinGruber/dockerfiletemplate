@@ -6,5 +6,5 @@ RUN yarn
 COPY . .
 RUN yarn build
 RUN yarn global add serve
-EXPOSE 5000
+EXPOSE 3000
 CMD [ "serve", "-S" , "build"]

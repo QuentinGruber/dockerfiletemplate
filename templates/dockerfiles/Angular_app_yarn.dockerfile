@@ -8,5 +8,5 @@ RUN yarn global add @angular/cli
 RUN ng build
 RUN yarn build
 RUN yarn global add serve
-EXPOSE 5000
+EXPOSE 3000
 CMD [ "serve", "-S" , "build"]
