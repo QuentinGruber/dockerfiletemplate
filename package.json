@@ -116,5 +116,11 @@
 		"prettier": "^2.5.1",
 		"typescript": "^4.5.5",
 		"vscode-test": "^1.4.1"
+	},
+	"__metadata": {
+		"id": "a70c54d6-50d6-49b6-9efb-fd30af880405",
+		"publisherDisplayName": "Quentin Gruber",
+		"publisherId": "653008df-b10c-4b10-8d9e-ad4edcfaf918",
+		"isPreReleaseVersion": false
 	}
 }
